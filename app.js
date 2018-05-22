@@ -3,9 +3,22 @@ const chalk = require('chalk');
 const debug = require('debug')('app');
 const morgan = require('morgan');
 const path = require('path');
+const sql = require('mssql');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const config = {
+  user: 'elibrary',
+  password: 'Zxcvbnm123',
+  server: 'elibrarydbserver.database.windows.net',
+  database: 'ElibraryDB',
+  options: {
+    encrypt: true
+  }
+};
+
+sql.connect(config).catch(err => debug(err));
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public/')));
