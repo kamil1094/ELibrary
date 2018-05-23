@@ -4,10 +4,17 @@ const debug = require('debug')('app:bookRoutes');
 
 const bookRouter = express.Router();
 
-/* instead of writing down all logic righ here I should move functions logic
+/* instead of writing down all the logic righ here I should move functions logic
 to separate file called bookController, userController or something like that */
 
 function router(nav) {
+    bookRouter.use((req, res, next) => {
+        if (req.user) {
+            next();
+        } else {
+           res.redirect('/');
+        }
+    });
     bookRouter.route('/')
         .get(async (req, res) => {
             try {
